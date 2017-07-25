@@ -12,7 +12,7 @@ const server = http.createServer(function(req, res) {
   req.url.query = querystring.url.parse(req.url.query);
 
   if(req.method === 'POST') {
-    parseBody(req, (err) => {
+    parseBody(req, function(err) {
       if(err) return console.error(err);
       console.log('POST request body:', req.body);
     });
