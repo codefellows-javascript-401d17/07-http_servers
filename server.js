@@ -21,7 +21,7 @@ const server = http.createServer(function(req, res) {
   if(req.method === 'GET' && req.url.pathname === '/cowsay') {
     let params = req.url.query;
     console.log('querystring params:', params);
-    res.write(cowsay.say({text: params.text}));
+    res.write(cowsay.say({text: 'HELLO!!'}));
     res.end();
   }
 
