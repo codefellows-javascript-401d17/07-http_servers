@@ -11,29 +11,43 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
-  if (req.method === 'POST' && req.url.pathname === '/cowsay') {
+  if (req.method === 'POST' && req.url.pathname ==='/') {
     parseBody(req, function(err) {
-      console.log(req.body.text);
       if (err) return console.error(err);
-      if (!req.body) {
-        req.statusCode = 400;
-        res.write(cowsay.say({ text: 'bad request' }));
+      console.log('POST request body:', req.body);
+    });
+  }
+
+  if (req.method === 'POST' && req.url.pathname === '/cowsay') {
+    // let params = req.url.query;
+    parseBody(req, function(err) {
+      console.log('hello');
+      if(err) {
+        console.log('bye');
+        res.writeHead(400, {
+          'Content-type': 'text-plain'
+        });
+        res.write(cowsay.say({
+          text: 'bad request'
+        }));
         res.end();
-      }else{
-        req.statusCode = 200;
-        res.write(cowsay.say({ text: req.body['text'] }));
+      } else {
+        res.writeHead(200, {
+          'Content-type': 'text-plain'
+        });
+        res.write(cowsay.say({
+          text: req.body.text
+        }));
         res.end();
       }
     });
   }
-
 
   if (req.method === 'GET' && req.url.pathname === '/cowsay') {
     let params = req.url.query;
     if (!params.text) {
       res.statusCode = 400;
       res.write(cowsay.say({ text: 'bad request' }));
-      res.end();
     }else{
       res.statusCode = 200;
       res.write(cowsay.say({ text: params.text }));
@@ -42,11 +56,14 @@ const server = http.createServer(function(req, res) {
   }
 
   if (req.method === 'GET' && req.url.pathname === '/') {
+    console.log(res);
     res.writeHead(200,{
       'content-Type': 'text/plain'
     });
+    console.log(res);
     res.end('hello from my server!');
   }
+
 });
 
 server.listen(PORT, function() {
