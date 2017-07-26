@@ -11,12 +11,25 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
+  if (req.method === 'POST' && req.url.pathname === '/') {
+    parseBody(req, function(err) {
+      if (err) return console.error(err);
+    });
+  }
+
   if(req.method === 'GET' && req.url.pathname ==='/cowsay') {
-    if(req.url.query.text) {
+    let params = req.url.query;
+    if(params.text) {
       res.writeHead(200, {
         'Content-Type': 'text/plain'
       });
-      res.write(cowsay.say({text: req.url.query}));
+      res.write(cowsay.say({text: params.query}));
+      res.end();
+    } else {
+      res.writeHead(400, {
+        'Content-Type': 'text/plain'
+      });
+      res.write(cowsay.say({text: 'GET request is bad'}));
       res.end();
     }
   }
