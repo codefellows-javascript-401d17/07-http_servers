@@ -31,7 +31,7 @@ const server = http.createServer(function(req, res) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
       res.write(cowsay.say({text: params.text }));
-    } else(!params.text) {
+    } else {
       res.statusCode = 400;
       res.write(cowsay.say({text: 'bad request'}));
     }
