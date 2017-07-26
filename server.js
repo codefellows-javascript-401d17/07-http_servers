@@ -11,7 +11,7 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
-  if(req.method === 'POST' && req.url.pathname === '/cowsay')
+  if(req.method === 'POST' && req.url.pathname === '/cowsay') {
     parseBody(req, function(err) {
       if(err) {
         res.statusCode = 400;
