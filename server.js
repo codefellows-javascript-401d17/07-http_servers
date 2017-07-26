@@ -27,7 +27,7 @@ const server = http.createServer(function(req, res) {
           'Content-type': 'text-plain'
         });
         res.write(cowsay.say({
-          text: 'bad request'
+          text: 'oops, you mooooootilated that request!', f: 'mutilated'
         }));
         res.end();
       } else {
@@ -46,7 +46,10 @@ const server = http.createServer(function(req, res) {
     let params = req.url.query;
     if (!params.text) {
       res.statusCode = 400;
-      res.write(cowsay.say({ text: 'bad request' }));
+      res.write(cowsay.say({
+        text: 'oops, you mooooootilated that request!', f: 'mutilated'
+      }));
+      res.end();
     }else{
       res.statusCode = 200;
       res.write(cowsay.say({ text: params.text }));
