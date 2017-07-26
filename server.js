@@ -19,7 +19,7 @@ const server = http.createServer(function(req, res) {
         res.write(cowsay.say({text: req.body.text}));
       } else {
         res.statusCode = 400;
-        res.write(cowsay.say({text: 'bad request'}));
+        res.write(400, cowsay.say({text: 'bad request'}));
       }
     });
   }
