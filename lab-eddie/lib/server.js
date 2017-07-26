@@ -26,7 +26,7 @@ reqMethods.POST = (req, res) => {
   });    
 }
 
-reqMethods.GET = (req, res) => {
+reqMethods.GET = (req, res, callback) => {
   myParse(req, (err) => {
     if (err) console.error(err);
     if(!req.url.query.text) return reqMethods.default(req, res);
