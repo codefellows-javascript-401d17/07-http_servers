@@ -1,2 +1,4 @@
-## Bonus
-* **2pts:** add the ability to change the cowfile - **ex: dragon, sheep, etc** _(note: this should be done through the querystring)_
+# Body Parser and HTTP
+This lab utilizes Node Module 'HTTP' and module parseBody to attach body to incoming POST requests. A response is generated whether or not the response is what our API/Server is looking for.
+
+
