@@ -16,10 +16,12 @@ const server = http.createServer(function(req, res) {
       if(err) return console.error(err);
       if(req.body.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: req.body.text}));
+        res.write(cowsay.say({text: req.body.text, f: 'tux'}));
+        res.end();
       } else {
         res.statusCode = 400;
-        res.write(400, cowsay.say({text: 'bad request'}));
+        res.write(400, cowsay.say({text: 'bad request', f: 'mutilated'}));
+        res.end();
       }
     });
   }
@@ -30,17 +32,17 @@ const server = http.createServer(function(req, res) {
     if(params.text) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
-      res.write(cowsay.say({text: params.text }));
+      res.write(cowsay.say({text: params.text, f: 'tux'}));
     } else {
       res.statusCode = 400;
-      res.write(cowsay.say({text: 'bad request'}));
+      res.write(cowsay.say({text: 'bad request', f: 'mutilated'}));
+      res.end();
     }
-    res.end();
   }
 
   if(req.method === 'GET' && req.url.pathname === '/') {
     let params = req.url.query;
-    res.write(cowsay.say(200, {text: 'Hello from my server!'}));
+    res.write(cowsay.say({text: 'Hello from my server!'}));
     res.end();
   }
 
