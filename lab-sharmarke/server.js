@@ -13,7 +13,16 @@ const server = http.createServer(function(req, res) {
 
   if (req.method === 'POST' && req.url.pathname === '/') {
     parseBody(req, function(err) {
-      if (err) return console.error(err);
+      if (err) {
+        res.writeHead(400);
+        res.write(cowsay.say({text: 'POST request bad'}));
+        res.end();
+      } else {
+        res.writeHead(200, {
+          'Content-Type:': 'text/plain'
+        });
+        res.end();
+      }
     });
   }
 
@@ -34,11 +43,12 @@ const server = http.createServer(function(req, res) {
     }
   }
 
-  if (req.method ==='POST') {
-    parseBody(req, function(err) {
-      if (err) return console.error(err);
-      console.log('POST req body:', req.body);
+  if (req.url.pathname ==='/') {
+    res.writeHead(200, {
+      'Content-Type': 'text/plain'
     });
+    res.write('hello from server');
+    res.end();
   }
 });
 
