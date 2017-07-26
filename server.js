@@ -11,16 +11,15 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
-  if(req.method === 'POST') {
+  if(req.method === 'POST' && req.url.pathname === '/cowsay')
     parseBody(req, function(err) {
-      if(err) return console.error(err);
-      if(req.body.text) {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: req.body.text, f: 'tux'}));
-        res.end();
-      } else {
+      if(err) {
         res.statusCode = 400;
         res.write(400, cowsay.say({text: 'bad request', f: 'mutilated'}));
+        res.end()
+      } else {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: req.body.text, f: 'tux'}));
         res.end();
       }
     });
