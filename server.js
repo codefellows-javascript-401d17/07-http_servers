@@ -15,8 +15,7 @@ const server = http.createServer(function(req, res) {
     parseBody(req, function(err) {
       if(err) return console.error(err);
       if(req.body.text) {
-        res.statusCode = 200;
-        res.writeHead({'Content-Type': 'text/plain'});
+        res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({text: req.body.text}));
       } else {
         res.statusCode = 400;
@@ -34,8 +33,7 @@ const server = http.createServer(function(req, res) {
 
   if(req.method === 'GET' && req.url.pathname === '/') {
     let params = req.url.query;
-    res.statusCode = 200;
-    res.write(cowsay.say({text: 'Hello from my server!'}));
+    res.write(cowsay.say(200, {text: 'Hello from my server!'}));
     res.end();
   }
 
