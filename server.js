@@ -13,10 +13,11 @@ const server = http.createServer(function(req, res) {
 
   if(req.method === 'POST' && req.url.pathname === '/cowsay') {
     parseBody(req, function(err) {
+      if(err) console.error(err);
       if(err) {
-        res.statusCode = 400;
-        res.write(400, cowsay.say({text: 'bad request', f: 'mutilated'}));
-        res.end()
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: 'bad request', f: 'mutilated'}));
+        res.end();
       } else {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({text: req.body.text, f: 'tux'}));
@@ -44,8 +45,6 @@ const server = http.createServer(function(req, res) {
     res.write(cowsay.say({text: 'Hello from my server!'}));
     res.end();
   }
-
-  res.end();
 }).listen(PORT, function() {
   console.log('Server on PORT:', PORT);
 });
