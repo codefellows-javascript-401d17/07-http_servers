@@ -19,7 +19,6 @@ const server = http.createServer(function(req, res) {
   }
 
   if (req.method === 'POST' && req.url.pathname === '/cowsay') {
-    // let params = req.url.query;
     parseBody(req, function(err) {
       console.log('hello');
       if(err) {
