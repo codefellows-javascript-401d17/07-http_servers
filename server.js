@@ -18,11 +18,26 @@ const server = http.createServer(function(req, res) {
     });
   }
 
+
   if (req.method === 'GET' && req.url.pathname === '/cowsay') {
     let params = req.url.query;
-    console.log('my querystring paramaters:', params);
-    res.write(cowsay.say({ text: params.text }));
-    res.end();
+    if (!params.text) {
+      res.statusCode = 400;
+      res.write(cowsay.say({ text: 'bad request' }));
+    }else{
+      res.statusCode = 200;
+      res.write(cowsay.say({ text: params.text }));
+      res.end();
+    }
+  }
+
+  if (req.method === 'GET' && req.url.pathname === '/') {
+    console.log(res);
+    res.writeHead(200,{
+      'content-Type': 'text/plain'
+    });
+    console.log(res);
+    res.end('hello from my server!');
   }
 
   res.end();
