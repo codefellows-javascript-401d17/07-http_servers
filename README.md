@@ -49,3 +49,6 @@ Your lab directory must include
 
 ## Bonus
 * **2pts:** add the ability to change the cowfile - **ex: dragon, sheep, etc** _(note: this should be done through the querystring)_
+
+## Questions and Observations
+###### I wish these functions had better error handling, it took me forever to finish the assignment because of one error that I could not figure out because of bad error handling. Other than that the assignment was a breeze, even the extra credit. 
