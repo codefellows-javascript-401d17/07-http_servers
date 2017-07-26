@@ -28,12 +28,12 @@ const server = http.createServer(function(req, res) {
     let params = req.url.query;
    
     if(params.text) {
-      res.writeHead(200, { 'Content-Type': 'text/plain'});
+      res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
-      res.write(cowsay.say({ text: params.text }));
-    } else if(params.text != 'string') {
-      res.writeHead(400);
-      res.write(cowsay.say({ text: 'bad request'}));
+      res.write(cowsay.say({text: params.text }));
+    } else(!params.text) {
+      res.statusCode = 400;
+      res.write(cowsay.say({text: 'bad request'}));
     }
     res.end();
   }
