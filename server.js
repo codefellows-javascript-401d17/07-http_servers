@@ -7,21 +7,36 @@ const cowsay = require('cowsay');
 const myParse = require('./lib/myParse.js');
 const PORT = process.env.PORT || 3000;
 
-console.log(cowsay.list.toString());
+const reqMethods = {};
 
-const postMethod = (req, callback) => {
-    parseBody(req, (err) => {
-        if(err) return console.error(err);
-        callback(req)
-    })
+reqMethods.errorResponse = (req, res) => {
+  res.writeHead(400, { 'content-type': 'text/plain' });
+  res.write(cowsay.say({text: 'bad request'}));
 }
 
-const server = http.createServer((req, res) => {
-  req.url = url.parse(req.url);
-    console.log('parsed url: ', req.url);
-    console.log('unparsed query: ', req.url.query)
-    req.url.query = querystring.parse(req.url.query);
+reqMethods.postMethod = (req, res) => {
+  parseBody(req, (err) => {
+    if (err) console.error(err);
+    
+    res.writeHead(400, { 'content-type': 'text/plain' });
+    res.write(cowsay.say({text: req.url.query.text}));
+    res.end();
+  });    
+}
 
-     if (req.method === 'POST') postMethod(req.body, 
-      (val) => console.log('POST request body: ', req.body))
+const server = http.createServer(function(req, res) {
+  req.url = url.parse(requ.url);
+  req.url.query = querystring.parse(req.url.query);
+
+  if (req.url.pathname === '/') {
+    res.writeHead(200, { 'content-type': 'text/plain' });
+    res.write('Hello from my server :D')
+    response.end();
+    return;
+  }
+
+});
+
+server.listen(PORT, () => {
+  console.log('Active Port :', PORT);
 });
