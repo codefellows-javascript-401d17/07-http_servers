@@ -25,10 +25,17 @@ const server = http.createServer(function(req, res) {
     });
   }
 
-  if(req.method === 'GET' && req.url.pathname === '/cowsay' || '/*') {
+  if(req.method === 'GET' && req.url.pathname === '/cowsay') {
     let params = req.url.query;
     res.statusCode = 200;
     res.write(cowsay.say({text: params.text}));
+    res.end();
+  }
+
+  if(req.method === 'GET' && req.url.pathname === '/') {
+    let params = req.url.query;
+    res.statusCode = 200;
+    res.write(cowsay.say({text: 'Hello from my server!'}));
     res.end();
   }
 
